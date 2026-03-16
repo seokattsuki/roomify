@@ -1,17 +1,28 @@
 import Navbar from "components/Navbar";
 import type { Route } from "./+types/home";
-import { ArrowRight, ArrowUpRight, Layers } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Layers, Clock} from "lucide-react";
 import Button from "components/ui/Button";
-import { Clock } from "lucide-react";
+import Upload from "components/Upload"; 
+import { useNavigate } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
-  return [
+  return [    
     { title: "New React Router App" },
     { name: "description", content: "Welcome to React Router!" },
   ];
 }
 
 export default function Home() {
+
+    const navigate = useNavigate();
+
+    const handleUploadComplete = async (base4Image: string) => {
+      const newId =Date.now().toString();
+
+      navigate(`/visualizer/${newId}`);
+
+      return true;
+    }
   return (
   <div className="home">
     <Navbar />
@@ -54,7 +65,7 @@ export default function Home() {
               <p>Support JPG, PNG, formats up to 10MB</p>
             </div>
 
-            <p>Upload images</p> 
+            <Upload onComplete={handleUploadComplete}/>
           </div>
       </div>
     </section>
